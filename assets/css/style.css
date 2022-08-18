@@ -1,0 +1,49 @@
+body {
+    margin: 0;
+}
+
+header {
+    text-align: center;
+    color: white;
+    background:linear-gradient(45deg, blue, lightblue);
+}
+
+header h1 {
+    margin: 0;
+    padding: 15px;
+}
+
+#weather-hub {
+    display: flex;
+    min-width: 100%;
+}
+
+#search-bar {
+    width: 30%;
+    padding: 15px;
+    background-color: lightblue;
+}
+
+main {
+    min-width: 70%;
+}
+
+#one-day {
+    padding: 15px;
+    margin: 15px;
+    border: 2px solid black;
+    min-width: 90%;
+}
+
+.five-day-cards {
+    display: flex;
+    /* justify-content: space-between; */
+}
+
+.card { 
+    color: white;
+    background-color: lightblue;
+    padding: 15px;
+    min-width: 18%;
+    margin: 15px;
+}
