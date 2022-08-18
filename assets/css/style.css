@@ -5,7 +5,7 @@ body {
 header {
     text-align: center;
     color: white;
-    background:linear-gradient(45deg, blue, lightblue);
+    background:linear-gradient(170deg, #044389 , #c9f9ff );
 }
 
 header h1 {
@@ -21,9 +21,28 @@ header h1 {
 #search-bar {
     width: 30%;
     padding: 15px;
-    background-color: lightblue;
+    background-color: #c9f9ff;
 }
 
+#search-bar h1{
+    color: #044389;
+    text-align: center;
+}
+
+#search-input {
+    width: 93%;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+#search-button {
+    width: 100%;
+    padding: 5px;
+    margin-top: 15px;
+    border-radius: 4px;
+    background-color: #044389;
+    color: white;
+}
 main {
     min-width: 70%;
 }
@@ -31,8 +50,9 @@ main {
 #one-day {
     padding: 15px;
     margin: 15px;
-    border: 2px solid black;
+    border: 2px solid #044389;
     min-width: 90%;
+    color: #044389;
 }
 
 .five-day-cards {
@@ -42,7 +62,7 @@ main {
 
 .card { 
     color: white;
-    background-color: lightblue;
+    background-color: #044389;
     padding: 15px;
     min-width: 18%;
     margin: 15px;
