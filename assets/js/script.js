@@ -76,39 +76,39 @@ function createCards(dayData, index) {
     card.append(cardUv);
 
     document.querySelector("#one-day").append(card);
-  }
+  } else if (index < 6) {
+    // create elements
+    let card = document.createElement("div");
+    card.classList = "card";
+    let cardDate = document.createElement("p");
+    let cardImg = document.createElement("img");
+    let cardTemp = document.createElement("p");
+    let cardWind = document.createElement("p");
+    let cardHumidity = document.createElement("p");
 
-  else if(index < 6) {
+    //assign content
+    let currentDate = new Date(dayData.dt * 1000).toLocaleString();
 
+    cardDate.textContent = currentDate.split(",")[0];
+
+    cardImg.src = `http://openweathermap.org/img/wn/${dayData.weather[0].icon}.png`;
+
+    cardTemp.textContent = "Temp: " + kToF(dayData.temp.day) + "°F";
+
+    cardWind.textContent = "Wind: " + dayData.wind_speed + " MPH";
+
+    cardHumidity.textContent = "Humidity: " + dayData.humidity + "%";
+
+    //append elements
+    card.append(cardDate);
+    card.append(cardImg);
+    card.append(cardTemp);
+    card.append(cardWind);
+    card.append(cardHumidity);
+
+    document.querySelector(".five-day-cards").append(card);
   }
   console.log(dayData);
-
-  let oneDayCard = document.createElement("div");
-  let fiveDayCard = document.querySelector(".five-day-cards");
-
-  //Dynamically create 5 day cards
-  let card = document.createElement("div");
-  let cardDate = document.createElement("h4");
-  let cardTemp = document.createElement("p");
-  let cardWind = document.createElement("p");
-  let cardHumidity = document.createElement("p");
-
-  //REPLACE WITH API FILLED//
-  let currentDate = new Date(dayData.dt * 1000).toLocaleString();
-  console.log(currentDate.split(","));
-  cardDate.textContent = currentDate.split(",")[0];
-  //add image
-  cardTemp.textContent = "99";
-  cardWind.textContent = "15 mph";
-  cardHumidity.textContent = "20%";
-
-  card.setAttribute("class", "card");
-
-  card.append(cardDate);
-  card.append(cardTemp);
-  card.append(cardWind);
-  card.append(cardHumidity);
-  fiveDayCard.append(card);
 }
 
 // Dynamically create one day card

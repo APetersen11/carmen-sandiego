@@ -57,13 +57,14 @@ main {
 
 .five-day-cards {
     display: flex;
-    /* justify-content: space-between; */
+    justify-content: space-between;
 }
 
 .card { 
     color: white;
     background-color: #044389;
     padding: 15px;
-    min-width: 18%;
+    width: 20%;
+    box-sizing: border-box;
     margin: 15px;
 }
