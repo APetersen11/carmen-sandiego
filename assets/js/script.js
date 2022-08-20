@@ -1,26 +1,53 @@
-var currentCity = null;
+// prefill location input with value from local storage
+// fetch weather using stored value
 
-fetch(
-  "https://api.openweathermap.org/data/2.5/weather?q=Atlanta&appid=8a42d43f7d7dc180da5b1e51890e67dc"
-)
-  .then(function (res) {
-    return res.json();
-  })
-  .then(function (data) {
-    currentCity = data.name;
-    console.log(currentCity);
-    return fetch(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&appid=8a42d43f7d7dc180da5b1e51890e67dc`
-    );
-  })
-  .then(function (res) {
-    return res.json();
-  })
-  .then(function (data) {
-    for (let i = 0; i < data.daily.length; i++) {
-      createCards(data.daily[i], i);
-    }
-  });
+// on button click
+//   1. get value of button
+//     1a. save search results to local storage
+//   2. use city name to get our lat/long
+//   3. use lat/long to get weather
+//   4. clear existing weather results
+//   5. render weather results
+
+let currentCity = null;
+let searchField = document.querySelector("#search-input");
+getWeather();
+
+function getWeather() {
+  let searchValue = searchField.value;
+  //save search to local storage
+  let history = localStorage.getItem("Cities") || [];
+  localStorage.setItem("Cities", history);
+  console.log(history);
+
+  fetch(
+    // use city name to get lat/long
+    `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
+      searchValue
+    )}&appid=8a42d43f7d7dc180da5b1e51890e67dc`
+  )
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (data) {
+      currentCity = data.name;
+      console.log(currentCity);
+      return fetch(
+        // use lat/long to get weather
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&appid=8a42d43f7d7dc180da5b1e51890e67dc`
+      );
+    })
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (data) {
+      document.querySelector("#one-day").innerHTML = "";
+      document.querySelector(".five-day-cards").innerHTML = "";
+      for (let i = 0; i < data.daily.length; i++) {
+        createCards(data.daily[i], i);
+      }
+    });
+}
 
 function kToF(kelvin) {
   return Math.round((kelvin - 273.15) * 1.8 + 32);
@@ -110,20 +137,3 @@ function createCards(dayData, index) {
   }
   console.log(dayData);
 }
-
-// Dynamically create one day card
-//do I need to do this? Can I just use the 5 day cards? wait for Lawren
-
-// Dynamically Create Elements
-//1. Create the element
-//let card = document.createElement("div");
-//let cardH4 = document.createElement("h4");
-// 2. give element content
-//cardH4.textContent = "8.19.22";
-
-// Optional - add any attributes
-//card.setAttribute("class", "card");
-
-// 3. Append to the page
-//card.append(cardH4);
-//fiveDayCard.append(card);
