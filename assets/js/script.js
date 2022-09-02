@@ -11,15 +11,42 @@
 
 let currentCity = null;
 let searchField = document.querySelector("#search-input");
-getWeather();
+let searchButton = document.querySelector("#search-button");
+let oneDayEl = document.querySelector("#one-day");
 
-function getWeather() {
+const getCity = () => {
   let searchValue = searchField.value;
   //save search to local storage
-  let history = localStorage.getItem("Cities") || [];
-  localStorage.setItem("Cities", history);
+  let history = JSON.parse(localStorage.getItem("Cities")) || [];
+  history.push(searchValue);
+  localStorage.setItem("Cities", JSON.stringify(history));
   console.log(history);
+  renderHistory();
+  getWeather(searchValue);
+};
 
+//append search history
+
+const renderHistory = () => {
+  let historyContainer = document.querySelector("#search-history");
+
+  let searchHistory = JSON.parse(localStorage.getItem("Cities"));
+  if (searchHistory) {
+    historyContainer.innerHTML = "";
+    searchHistory.forEach((city) => {
+      let buttonEl = document.createElement("button");
+      buttonEl.textContent = city;
+      buttonEl.setAttribute("class", "history-button");
+      buttonEl.addEventListener("click", function () {
+        getWeather(city);
+      });
+      historyContainer.append(buttonEl);
+    });
+  }
+};
+
+function getWeather(searchValue) {
+  oneDayEl.style.display = "block";
   fetch(
     // use city name to get lat/long
     `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
@@ -34,7 +61,7 @@ function getWeather() {
       console.log(currentCity);
       return fetch(
         // use lat/long to get weather
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&appid=8a42d43f7d7dc180da5b1e51890e67dc`
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&units=imperial&appid=8a42d43f7d7dc180da5b1e51890e67dc`
       );
     })
     .then(function (res) {
@@ -49,9 +76,9 @@ function getWeather() {
     });
 }
 
-function kToF(kelvin) {
-  return Math.round((kelvin - 273.15) * 1.8 + 32);
-}
+// function kToF(kelvin) {
+//   return Math.round((kelvin - 273.15) * 1.8 + 32);
+// }
 
 function createCards(dayData, index) {
   if (index === 0) {
@@ -74,7 +101,7 @@ function createCards(dayData, index) {
 
     cardImg.src = `http://openweathermap.org/img/wn/${dayData.weather[0].icon}.png`;
 
-    cardTemp.textContent = "Temp: " + kToF(dayData.temp.day) + "°F";
+    cardTemp.textContent = "Temp: " + dayData.temp.day + "°F";
 
     cardWind.textContent = "Wind: " + dayData.wind_speed + " MPH";
 
@@ -120,7 +147,7 @@ function createCards(dayData, index) {
 
     cardImg.src = `http://openweathermap.org/img/wn/${dayData.weather[0].icon}.png`;
 
-    cardTemp.textContent = "Temp: " + kToF(dayData.temp.day) + "°F";
+    cardTemp.textContent = "Temp: " + dayData.temp.day + "°F";
 
     cardWind.textContent = "Wind: " + dayData.wind_speed + " MPH";
 
@@ -137,3 +164,7 @@ function createCards(dayData, index) {
   }
   console.log(dayData);
 }
+
+renderHistory();
+
+searchButton.addEventListener("click", getCity);

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Weather Forecast</title>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
@@ -18,7 +18,7 @@
         <div>
           <h1>Search For A City</h1>
           <input id="search-input" placeholder="New York City"/>
-          <button id="search-button" onclick="getWeather()">Search</button>
+          <button id="search-button">Search</button>
         </div>
         <div id="search-history">
           <!-- search history -->
@@ -27,7 +27,8 @@
 
       <main>
         <!-- one day forecast  -->
-        <section id="one-day">
+        <section id="one-day" style="display: none;">
+
           <!-- <h2>Atlanta</h2>
           <p>8/18/22</p>
           <img src="http://openweathermap.org/img/wn/04d.png" />
